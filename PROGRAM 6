@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <limits.h>
+
+int main()
+{
+    int n, i, time = 0, completed = 0;
+    int bt[20], rt[20], pr[20];
+
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        printf("Burst Time P%d: ", i + 1);
+        scanf("%d", &bt[i]);
+
+        printf("Priority P%d: ", i + 1);
+        scanf("%d", &pr[i]);
+
+        rt[i] = bt[i];
+    }
+
+    while(completed != n)
+    {
+        int highest = -1;
+        int min = INT_MAX;
+
+        for(i = 0; i < n; i++)
+        {
+            if(rt[i] > 0 && pr[i] < min)
+            {
+                min = pr[i];
+                highest = i;
+            }
+        }
+
+        if(highest == -1)
+        {
+            time++;
+            continue;
+        }
+
+        rt[highest]--;
+        time++;
+
+        if(rt[highest] == 0)
+            completed++;
+    }
+
+    printf("Preemptive Priority Scheduling Completed\n");
+
+    return 0;
+}
