@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <pthread.h>
+
+void *thread_function(void *arg)
+{
+    int thread_no = *(int *)arg;
+
+    printf("Thread %d is running.\n", thread_no);
+
+    return NULL;
+}
+
+int main()
+{
+    pthread_t t1, t2;
+    int a = 1, b = 2;
+
+    pthread_create(&t1, NULL, thread_function, &a);
+    pthread_create(&t2, NULL, thread_function, &b);
+
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+
+    printf("Both threads have finished execution.\n");
+
+    return 0;
+}
